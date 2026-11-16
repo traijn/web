@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#F4F0E6">
+  <meta name="description" content="A reusable content page template for kimi.you.">
+  <title>Page title — kimi.you</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111110'/%3E%3Crect x='8' y='7' width='16' height='18' fill='none' stroke='%23F4F0E6' stroke-width='2'/%3E%3Cpath d='M12 7v18' stroke='%23F4F0E6' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!--
+    GENERAL CONTENT TEMPLATE
+    ------------------------
+    1. Duplicate this file and give it a name, for example: travel.html
+    2. Update the <title>, meta description, page title, and intro below.
+    3. Replace the sample copy and images. Put image files in /images/.
+    4. Add a link to the new page in the navigation or another page.
+    5. Delete any blocks you don't need. Keep the header, main, and footer.
+  -->
+
+  <div class="book">
+    <div class="binding" aria-hidden="true">
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+    </div>
+
+    <header class="book-header">
+      <a class="brand" href="index.html" aria-label="kimi.you home">
+        <span class="brand-seal" aria-hidden="true">k</span>
+        <span>kimi.you</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="blog.html">Blog</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <header class="page-hero" aria-labelledby="page-title">
+        <div class="page-hero-copy">
+          <p class="eyebrow">
+            <span class="eyebrow-rule" aria-hidden="true"></span>
+            <span>Page template</span>
+          </p>
+          <h1 id="page-title">Your page <em>title.</em></h1>
+          <p class="hero-lede">
+            Use this opening paragraph to tell the reader where they are and
+            what they will find here. Keep it short and welcoming.
+          </p>
+        </div>
+
+        <aside class="title-slip" aria-label="Page information">
+          <span class="slip-label" aria-hidden="true">Page</span>
+          <span class="slip-seal" aria-hidden="true">k</span>
+          <span class="slip-meta" aria-hidden="true">Draft</span>
+        </aside>
+      </header>
+
+      <div class="page-layout">
+        <article class="prose">
+          <p class="lead">
+            This is the opening paragraph. Use it to introduce the page in one
+            or two sentences.
+          </p>
+          <p>
+            The rest of the page can hold anything you like: a personal story,
+            a project write-up, a travel note, or a collection of photographs.
+            Delete the sample sections below and replace them with your own.
+          </p>
+
+          <!-- A single image with a caption -->
+          <figure>
+            <img src="images/post-cover.svg" width="1600" height="900" alt="A black sun and mountain forms on cream paper">
+            <figcaption>Replace this placeholder image and write a useful caption. Include the photographer or source if needed.</figcaption>
+          </figure>
+
+          <h2>A section heading</h2>
+          <p>
+            Use headings to break long pages into comfortable sections. A
+            little structure makes a lot of text feel lighter.
+          </p>
+          <p>
+            You can add ordinary links, <strong>bold emphasis</strong>, and
+            <em>italic emphasis</em> wherever they help.
+          </p>
+
+          <!-- Two images side by side -->
+          <div class="image-pair">
+            <figure>
+              <img src="images/project-quiet-type.svg" width="1400" height="1050" alt="Typographic artwork with a large Aa">
+              <figcaption>A pair of images works well for details.</figcaption>
+            </figure>
+            <figure>
+              <img src="images/project-small-hours.svg" width="1400" height="1050" alt="A cream moon seen through a black window">
+              <figcaption>Keep captions brief and specific.</figcaption>
+            </figure>
+          </div>
+
+          <blockquote>
+            <p>Use a pull quote to give one sentence room to breathe.</p>
+            <cite>Optional attribution</cite>
+          </blockquote>
+
+          <h2>Lists and notes</h2>
+          <ul>
+            <li>Use a list for steps, observations, or recommendations.</li>
+            <li>Keep each item to a sentence or two.</li>
+            <li>Remove this list if the page doesn't need one.</li>
+          </ul>
+          <p>
+            End the page with a closing thought or a clear next step. For
+            example, invite the reader to <a href="mailto:hello@kimi.you">send
+            you a note</a>.
+          </p>
+        </article>
+
+        <aside class="page-aside" aria-label="Page details">
+          <section class="aside-block">
+            <h2 class="aside-title">Page details</h2>
+            <dl class="details">
+              <div>
+                <dt>Date</dt>
+                <dd>Month 2026</dd>
+              </div>
+              <div>
+                <dt>Type</dt>
+                <dd>Page / note</dd>
+              </div>
+              <div>
+                <dt>Status</dt>
+                <dd>Ready to edit</dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="aside-block">
+            <h2 class="aside-title">Keep exploring</h2>
+            <ul class="aside-links">
+              <li><a href="about.html">About <span aria-hidden="true">↘</span></a></li>
+              <li><a href="projects.html">Projects <span aria-hidden="true">↘</span></a></li>
+              <li><a href="blog.html">Blog <span aria-hidden="true">↘</span></a></li>
+            </ul>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="colophon">
+      <div class="colophon-head">
+        <span class="en">Colophon</span>
+      </div>
+      <div class="colophon-body">
+        <p class="colophon-name">kimi.you</p>
+        <p>A personal homepage — first edition, 2026.</p>
+        <p><a class="footer-email" href="mailto:hello@kimi.you">hello@kimi.you</a></p>
+        <p>Set in Mincho and Iowan Old Style. Made with care.</p>
+        <p class="copyright">© 2026 Kimi</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

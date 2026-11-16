@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#F4F0E6">
+  <meta name="description" content="A quiet, private EPUB reader by kimi.you. Open a DRM-free EPUB and read it in your browser — files never leave your device.">
+  <title>Reader — kimi.you</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111110'/%3E%3Crect x='8' y='7' width='16' height='18' fill='none' stroke='%23F4F0E6' stroke-width='2'/%3E%3Cpath d='M12 7v18' stroke='%23F4F0E6' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/reader.css">
+</head>
+<body class="reader-page">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <div class="book">
+    <div class="binding" aria-hidden="true">
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+    </div>
+
+    <header class="book-header">
+      <a class="brand" href="index.html" aria-label="kimi.you home">
+        <span class="brand-seal" aria-hidden="true">k</span>
+        <span>kimi.you</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="blog.html">Blog</a>
+        <a href="reader.html" aria-current="page">Reader</a>
+      </nav>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <header class="page-hero reader-hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">
+            <span class="eyebrow-rule" aria-hidden="true"></span>
+            <span>Reading room</span>
+          </p>
+          <h1 id="page-title">A quiet place to <em>read.</em></h1>
+          <p class="hero-lede">
+            Open a DRM-free EPUB and read it here, in the browser. Nothing is
+            uploaded and nothing is stored on a server — your book stays on
+            your device.
+          </p>
+        </div>
+
+        <aside class="title-slip" aria-label="Reading room">
+          <span class="slip-label" aria-hidden="true">Read</span>
+          <span class="slip-seal" aria-hidden="true">k</span>
+          <span class="slip-meta" aria-hidden="true">EPUB</span>
+        </aside>
+      </header>
+
+      <!-- ==================================================================
+           Empty state — open a book
+           ================================================================== -->
+      <section class="reader-empty" id="reader-empty" aria-labelledby="open-title">
+        <div class="reader-empty-grid">
+          <div class="open-column">
+            <button class="dropzone" id="dropzone" type="button" aria-describedby="drop-help privacy-note">
+              <svg class="drop-glyph" viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true" focusable="false">
+                <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path>
+                <path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>
+                <path d="M8 7.5h8M8 10.5h5"></path>
+              </svg>
+              <span class="drop-kicker">Add a book</span>
+              <span class="drop-title" id="open-title">Drop an EPUB here</span>
+              <span class="drop-hint" id="drop-help">or choose a file from your device</span>
+              <span class="drop-cta" aria-hidden="true">Choose an EPUB</span>
+              <span class="drop-format">EPUB · E-book</span>
+            </button>
+            <input class="visually-hidden" id="file-input" type="file" accept=".epub,application/epub+zip" aria-label="Choose an EPUB file">
+            <p class="privacy-note" id="privacy-note">
+              <strong>DRM-free EPUB files only.</strong>
+              Your book is opened locally in this browser and never leaves this device.
+            </p>
+            <p class="reader-error" id="error" role="alert" tabindex="-1" hidden></p>
+          </div>
+
+          <aside class="empty-aside" aria-label="Reading options">
+            <section class="continue-card" id="continue-card" aria-labelledby="continue-title" hidden>
+              <p class="card-kicker"><span>Continue reading</span></p>
+              <h2 id="continue-title"></h2>
+              <p class="continue-meta" id="continue-meta"></p>
+              <div class="continue-actions">
+                <button class="button" id="continue-open" type="button">Re-open EPUB</button>
+                <button class="text-button" id="continue-dismiss" type="button">Dismiss</button>
+              </div>
+            </section>
+
+            <section class="find-books" aria-labelledby="find-title">
+              <p class="card-kicker"><span>Free libraries</span></p>
+              <h2 id="find-title">Find something to read</h2>
+              <p>
+                Both libraries offer carefully made, DRM-free EPUB editions.
+                Download a book, then bring the file back here.
+              </p>
+              <ul class="source-links">
+                <li>
+                  <a href="https://www.gutenberg.org/" target="_blank" rel="noopener noreferrer">
+                    Project Gutenberg <span aria-hidden="true">↗</span>
+                    <span class="visually-hidden">(opens in a new tab)</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://standardebooks.org/" target="_blank" rel="noopener noreferrer">
+                    Standard Ebooks <span aria-hidden="true">↗</span>
+                    <span class="visually-hidden">(opens in a new tab)</span>
+                  </a>
+                </li>
+              </ul>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           Reading view
+           ================================================================== -->
+      <section class="reader-app" id="reader-app" aria-label="EPUB reader" hidden>
+        <div class="reader-shell" id="reader-shell" data-read-theme="sepia">
+          <header class="reader-bar" id="reader-bar">
+            <button class="bar-button" id="toc-toggle" type="button" aria-label="Open table of contents" aria-expanded="false" aria-controls="toc-drawer">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true" focusable="false">
+                <path d="M4 6.5h16M4 12h16M4 17.5h10"></path>
+              </svg>
+              <span class="bar-button-label">Contents</span>
+            </button>
+
+            <div class="reader-book-meta">
+              <p class="reader-book-title" id="book-title">Opening book…</p>
+              <p class="reader-book-author" id="book-author"></p>
+            </div>
+
+            <div class="reader-bar-actions">
+              <button class="bar-button" id="settings-toggle" type="button" aria-label="Open reading settings" aria-expanded="false" aria-controls="settings-drawer">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true" focusable="false">
+                  <path d="M4 7h9M17 7h3M4 17h3M11 17h9"></path>
+                  <circle cx="15" cy="7" r="2"></circle>
+                  <circle cx="9" cy="17" r="2"></circle>
+                </svg>
+                <span class="bar-button-label">Settings</span>
+              </button>
+              <button class="bar-button" id="close-book" type="button" aria-label="Close book and return to the library">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true" focusable="false">
+                  <path d="M6 6l12 12M18 6L6 18"></path>
+                </svg>
+                <span class="bar-button-label">Close</span>
+              </button>
+            </div>
+          </header>
+
+          <div class="reader-viewport" id="reader-viewport">
+            <div class="viewer-pad">
+              <div class="viewer" id="viewer" tabindex="-1"></div>
+            </div>
+
+            <button class="page-edge page-edge-prev" id="edge-prev" type="button" aria-label="Previous page">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true" focusable="false">
+                <path d="M19 12H5M11 6l-6 6 6 6"></path>
+              </svg>
+            </button>
+            <button class="page-edge page-edge-next" id="edge-next" type="button" aria-label="Next page">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true" focusable="false">
+                <path d="M5 12h14M13 6l6 6-6 6"></path>
+              </svg>
+            </button>
+
+            <div class="reader-loading" id="reader-loading" aria-live="polite">
+              <span class="loading-mark" aria-hidden="true"></span>
+              <p id="loading-text">Preparing the book…</p>
+            </div>
+          </div>
+
+          <footer class="reader-pager" id="reader-pager" aria-label="Reading progress and page controls">
+            <button class="pager-button" id="prev-page" type="button" aria-label="Previous page" disabled>
+              <span aria-hidden="true">←</span> <span class="pager-label">Previous</span>
+            </button>
+
+            <div class="reader-progress" id="reader-progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0% read">
+              <span class="progress-track" aria-hidden="true"><span class="progress-bar" id="progress-bar"></span></span>
+              <span class="progress-text" id="progress-text">0%</span>
+            </div>
+
+            <button class="pager-button" id="next-page" type="button" aria-label="Next page" disabled>
+              <span class="pager-label">Next</span> <span aria-hidden="true">→</span>
+            </button>
+          </footer>
+        </div>
+
+        <p class="reader-help" id="reader-help">
+          Tap the center to hide the controls <span aria-hidden="true">·</span>
+          arrow keys or a swipe turn the page
+        </p>
+      </section>
+    </main>
+
+    <footer class="colophon">
+      <div class="colophon-head">
+        <span class="en">Colophon</span>
+      </div>
+      <div class="colophon-body">
+        <p class="colophon-name">kimi.you</p>
+        <p>A personal homepage — first edition, 2026.</p>
+        <p><a class="footer-email" href="mailto:hello@kimi.you">hello@kimi.you</a></p>
+        <p>Set in Mincho and Iowan Old Style. Made with care.</p>
+        <p class="copyright">© 2026 Kimi</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ====================================================================
+       Drawers
+       ==================================================================== -->
+  <div class="drawer-scrim" id="drawer-scrim" hidden></div>
+
+  <aside class="drawer drawer-left" id="toc-drawer" aria-labelledby="toc-title" aria-hidden="true" inert>
+    <header class="drawer-head">
+      <p class="drawer-kicker"><span>Contents</span></p>
+      <h2 id="toc-title">Table of contents</h2>
+      <button class="drawer-close" type="button" data-close-drawer aria-label="Close table of contents">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true" focusable="false">
+          <path d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+    </header>
+    <div class="drawer-scroll">
+      <div class="toc-content" id="toc-list"></div>
+      <p class="drawer-empty" id="toc-empty" hidden>This book doesn’t include a table of contents.</p>
+    </div>
+  </aside>
+
+  <aside class="drawer drawer-right" id="settings-drawer" aria-labelledby="settings-title" aria-hidden="true" inert>
+    <header class="drawer-head">
+      <p class="drawer-kicker"><span>Reading settings</span></p>
+      <h2 id="settings-title">Settings</h2>
+      <button class="drawer-close" type="button" data-close-drawer aria-label="Close reading settings">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true" focusable="false">
+          <path d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+    </header>
+
+    <div class="drawer-scroll">
+      <form class="settings-form" id="settings-form">
+        <fieldset class="settings-group">
+          <legend class="settings-legend">Reading theme</legend>
+          <div class="theme-options">
+            <label class="theme-option">
+              <input class="visually-hidden" type="radio" name="reader-theme" value="light">
+              <span class="theme-card">
+                <span class="theme-swatch theme-swatch-light" aria-hidden="true"></span>
+                <span>Light</span>
+              </span>
+            </label>
+            <label class="theme-option">
+              <input class="visually-hidden" type="radio" name="reader-theme" value="sepia">
+              <span class="theme-card">
+                <span class="theme-swatch theme-swatch-sepia" aria-hidden="true"></span>
+                <span>Sepia</span>
+              </span>
+            </label>
+            <label class="theme-option">
+              <input class="visually-hidden" type="radio" name="reader-theme" value="dark">
+              <span class="theme-card">
+                <span class="theme-swatch theme-swatch-dark" aria-hidden="true"></span>
+                <span>Dark</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="settings-group">
+          <legend class="settings-legend">Text size</legend>
+          <div class="range-head">
+            <label for="font-size">Size</label>
+            <output id="font-size-value" for="font-size">100%</output>
+          </div>
+          <input id="font-size" type="range" min="80" max="160" step="5" value="100">
+        </fieldset>
+
+        <fieldset class="settings-group">
+          <legend class="settings-legend">Typeface</legend>
+          <div class="font-options">
+            <label class="font-option">
+              <input class="visually-hidden" type="radio" name="reader-font" value="serif">
+              <span class="font-card">
+                <span class="font-sample font-sample-serif" aria-hidden="true">Aa</span>
+                <span class="font-copy"><span>Serif</span><small>Iowan · Palatino</small></span>
+              </span>
+            </label>
+            <label class="font-option">
+              <input class="visually-hidden" type="radio" name="reader-font" value="sans">
+              <span class="font-card">
+                <span class="font-sample font-sample-sans" aria-hidden="true">Aa</span>
+                <span class="font-copy"><span>Sans-serif</span><small>System sans</small></span>
+              </span>
+            </label>
+            <label class="font-option">
+              <input class="visually-hidden" type="radio" name="reader-font" value="dyslexic">
+              <span class="font-card">
+                <span class="font-sample font-sample-dyslexic" aria-hidden="true">Aa</span>
+                <span class="font-copy"><span>OpenDyslexic</span><small>Dyslexia-friendly</small></span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="settings-group">
+          <legend class="settings-legend">Line spacing</legend>
+          <div class="range-head">
+            <label for="line-height">Spacing</label>
+            <output id="line-height-value" for="line-height">1.6</output>
+          </div>
+          <input id="line-height" type="range" min="1.3" max="2" step="0.05" value="1.6">
+        </fieldset>
+
+        <fieldset class="settings-group">
+          <legend class="settings-legend">Margins</legend>
+          <div class="range-head">
+            <label for="margin">Page margins</label>
+            <output id="margin-value" for="margin">Normal</output>
+          </div>
+          <input id="margin" type="range" min="1" max="5" step="1" value="3">
+        </fieldset>
+
+        <div class="settings-footer">
+          <button class="text-button" id="settings-reset" type="button">Reset to defaults</button>
+          <p>Saved on this device.</p>
+        </div>
+      </form>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="drop-overlay" id="drop-overlay" aria-hidden="true">
+    <p>Drop to open an EPUB</p>
+  </div>
+
+  <noscript>
+    <p class="noscript">This reader needs JavaScript to open EPUB files.</p>
+  </noscript>
+
+  <!-- JSZip must load before epub.js. Versions are pinned. -->
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/epubjs@0.3.93/dist/epub.min.js"></script>
+  <script type="module" src="js/reader.js"></script>
+</body>
+</html>
