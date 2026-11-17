@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#F4F0E6">
+  <meta name="description" content="Run small language models entirely in your browser with WebLLM. No account, no server, and nothing you type leaves your device.">
+  <title>Small models — kimi.you</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111110'/%3E%3Crect x='8' y='7' width='16' height='18' fill='none' stroke='%23F4F0E6' stroke-width='2'/%3E%3Cpath d='M12 7v18' stroke='%23F4F0E6' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <div class="book">
+    <div class="binding" aria-hidden="true">
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+    </div>
+
+    <header class="book-header">
+      <a class="brand" href="index.html" aria-label="kimi.you home">
+        <span class="brand-seal" aria-hidden="true">k</span>
+        <span>kimi.you</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="reader.html">Reader</a>
+        <a href="models.html" aria-current="page">Models</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <header class="page-hero" aria-labelledby="page-title">
+        <div class="page-hero-copy">
+          <p class="eyebrow">
+            <span class="eyebrow-rule" aria-hidden="true"></span>
+            <span>Playground</span>
+          </p>
+          <h1 id="page-title">Small models, <em>locally.</em></h1>
+          <p class="hero-lede">
+            Run a small language model inside this browser tab. No account, no
+            server, no upload — just a download you keep, and a quiet chat that
+            stays on your machine.
+          </p>
+        </div>
+
+        <aside class="title-slip" aria-label="Page information">
+          <span class="slip-label" aria-hidden="true">Models</span>
+          <span class="slip-seal" aria-hidden="true">k</span>
+          <span class="slip-meta" aria-hidden="true">On device</span>
+        </aside>
+      </header>
+
+      <div class="models-notice" id="gpu-notice" role="status" hidden>
+        <p class="notice-label" id="gpu-notice-label">WebGPU unavailable</p>
+        <p class="notice-text" id="gpu-notice-text"></p>
+      </div>
+
+      <section class="chapter" id="models" aria-labelledby="models-title">
+        <header class="chapter-head">
+          <p class="chapter-index">I</p>
+          <h2 id="models-title">Choose a model</h2>
+          <p class="chapter-note">0.5B – 3B</p>
+        </header>
+        <div class="chapter-body models-body">
+          <p class="chapter-lead">
+            Pick the smallest model that suits the task. The first load downloads
+            the weights and keeps them in browser storage; after that, loading is
+            almost instant.
+          </p>
+          <p class="models-hint">
+            Sizes are approximate. A desktop browser is recommended for the 3B
+            model. Loading a different model starts a new conversation.
+          </p>
+
+          <div class="model-grid" id="model-grid"></div>
+
+          <noscript>
+            <p class="model-note">
+              This page needs JavaScript, and a browser with WebGPU, to load a
+              model.
+            </p>
+          </noscript>
+        </div>
+      </section>
+
+      <section class="chapter" id="cache" aria-labelledby="cache-title">
+        <header class="chapter-head">
+          <p class="chapter-index">II</p>
+          <h2 id="cache-title">Cache</h2>
+          <p class="chapter-note">On this device</p>
+        </header>
+        <div class="chapter-body">
+          <p class="chapter-lead">
+            Downloaded model files live in this browser's cache, not on a server.
+            Clearing them frees the space.
+          </p>
+          <div class="cache-row">
+            <button class="button button-secondary" id="clear-cache" type="button">
+              Clear cached models
+            </button>
+            <p class="cache-status" id="cache-status" role="status" aria-live="polite"></p>
+          </div>
+
+          <div class="cache-confirm" id="cache-confirm" role="group" aria-labelledby="cache-confirm-title" hidden>
+            <p id="cache-confirm-title">
+              Remove the downloaded model files from this browser? You will need
+              to download them again the next time you load a model.
+            </p>
+            <div class="cache-confirm-actions">
+              <button class="button" id="confirm-clear" type="button">
+                Yes, clear cache
+              </button>
+              <button class="text-button" id="cancel-clear" type="button">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter" id="chat" aria-labelledby="chat-title">
+        <header class="chapter-head">
+          <p class="chapter-index">III</p>
+          <h2 id="chat-title">Chat</h2>
+          <p class="chapter-note" id="chat-note">No model loaded</p>
+        </header>
+        <div class="chapter-body">
+          <div class="chat-placeholder" id="chat-placeholder">
+            <p class="chapter-lead">Load a model above to begin.</p>
+            <p class="models-hint">
+              The conversation stays in this tab. Reloading the page clears it.
+            </p>
+          </div>
+          <div id="chat-container" hidden></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="colophon">
+      <div class="colophon-head">
+        <span class="en">Colophon</span>
+      </div>
+      <div class="colophon-body">
+        <p class="colophon-name">kimi.you</p>
+        <p>A personal homepage — first edition, 2026.</p>
+        <p><a class="footer-email" href="mailto:hello@kimi.you">hello@kimi.you</a></p>
+        <p>Set in Mincho and Iowan Old Style. Made with care.</p>
+        <p class="copyright">© 2026 Kimi</p>
+      </div>
+    </footer>
+  </div>
+
+  <script type="module">
+    import {
+      MODELS,
+      detectWebGPU,
+      loadModel,
+      unloadModel,
+      checkCachedModels,
+      clearModelCache,
+      describeError,
+    } from "./js/models.js";
+    import { createChat } from "./js/chat.js";
+
+    const dom = {
+      grid: document.getElementById("model-grid"),
+      notice: document.getElementById("gpu-notice"),
+      noticeLabel: document.getElementById("gpu-notice-label"),
+      noticeText: document.getElementById("gpu-notice-text"),
+      chatContainer: document.getElementById("chat-container"),
+      chatPlaceholder: document.getElementById("chat-placeholder"),
+      chatNote: document.getElementById("chat-note"),
+      clearCache: document.getElementById("clear-cache"),
+      cacheStatus: document.getElementById("cache-status"),
+      cacheConfirm: document.getElementById("cache-confirm"),
+      confirmClear: document.getElementById("confirm-clear"),
+      cancelClear: document.getElementById("cancel-clear"),
+    };
+
+    const state = {
+      checked: false,
+      supported: false,
+      busy: false,
+      loadingModelId: null,
+      loadedModelId: null,
+    };
+
+    const cards = new Map();
+    const cached = Object.create(null);
+    let cacheChecked = false;
+    let chat = null;
+    let progressFrame = 0;
+    let pendingProgress = null;
+    let focusBeforeConfirm = null;
+
+    const SUGGESTIONS = [
+      "Explain WebGPU in two sentences.",
+      "Write a haiku about a quiet morning.",
+      "Draft a friendly reply to a dinner invitation.",
+    ];
+
+    /* ----------------------------------------------------------------------
+       Model cards
+       ---------------------------------------------------------------------- */
+
+    function licenseMarkup(model) {
+      if (!model.licenseUrl) {
+        return model.license;
+      }
+
+      return `<a href="${model.licenseUrl}" target="_blank" rel="noopener noreferrer">${model.license} <span aria-hidden="true">↗</span></a>`;
+    }
+
+    function createCard(model, index) {
+      const article = document.createElement("article");
+      article.className = "model-card";
+      article.dataset.model = model.id;
+
+      article.innerHTML = `
+        <div class="model-card-head">
+          <p class="model-kicker">${String(index + 1).padStart(2, "0")} · ${model.params} parameters</p>
+          <div class="model-flags">
+            ${model.desktopOnly ? '<span class="model-flag">Desktop recommended</span>' : ""}
+            <span class="model-flag model-cached" hidden>Downloaded</span>
+          </div>
+        </div>
+        <h3 class="model-name">${model.name}</h3>
+        <p class="model-note">${model.note}</p>
+        <dl class="model-meta">
+          <div>
+            <dt>Download</dt>
+            <dd>${model.size}</dd>
+          </div>
+          <div>
+            <dt>License</dt>
+            <dd>${licenseMarkup(model)}</dd>
+          </div>
+        </dl>
+        <div class="model-actions">
+          <button class="button model-load" type="button">Load model · ${model.size}</button>
+          <button class="text-button model-unload" type="button" hidden>Unload</button>
+        </div>
+        <div class="model-progress" hidden>
+          <div class="progress-row">
+            <span class="progress-percent" data-percent>0%</span>
+            <span class="progress-status" data-status>Preparing the model…</span>
+          </div>
+          <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Download progress for ${model.name}">
+            <span class="progress-fill" data-fill></span>
+          </div>
+        </div>
+        <p class="model-error" role="alert" hidden></p>
+      `;
+
+      const ref = {
+        model,
+        article,
+        load: article.querySelector(".model-load"),
+        unload: article.querySelector(".model-unload"),
+        progress: article.querySelector(".model-progress"),
+        percent: article.querySelector("[data-percent]"),
+        status: article.querySelector("[data-status]"),
+        fill: article.querySelector("[data-fill]"),
+        track: article.querySelector(".progress-track"),
+        error: article.querySelector(".model-error"),
+        cachedTag: article.querySelector(".model-cached"),
+      };
+
+      ref.load.addEventListener("click", () => {
+        void handleLoad(ref);
+      });
+      ref.unload.addEventListener("click", () => {
+        void handleUnload();
+      });
+
+      return ref;
+    }
+
+    function renderCards() {
+      const fragment = document.createDocumentFragment();
+
+      MODELS.forEach((model, index) => {
+        const ref = createCard(model, index);
+        cards.set(model.id, ref);
+        fragment.appendChild(ref.article);
+      });
+
+      dom.grid.replaceChildren(fragment);
+    }
+
+    function refreshCards() {
+      const locked = !state.supported || state.busy;
+
+      for (const ref of cards.values()) {
+        const isLoaded = state.loadedModelId === ref.model.id;
+        const isLoading = state.loadingModelId === ref.model.id;
+
+        ref.article.dataset.loaded = String(isLoaded);
+        ref.article.dataset.loading = String(isLoading);
+
+        ref.load.disabled = locked || isLoaded;
+        ref.load.textContent = isLoading
+          ? "Loading…"
+          : isLoaded
+            ? "Loaded"
+            : `Load model · ${ref.model.size}`;
+
+        if (!state.supported) {
+          ref.load.title = state.checked
+            ? "WebGPU is not available in this browser."
+            : "Checking WebGPU…";
+        } else if (state.busy && !isLoading) {
+          ref.load.title = "Wait for the current task to finish.";
+        } else {
+          ref.load.removeAttribute("title");
+        }
+
+        ref.unload.hidden = !isLoaded;
+        ref.unload.disabled = state.busy;
+        ref.progress.hidden = !isLoading;
+        ref.cachedTag.hidden = !cached[ref.model.id] || isLoaded;
+      }
+
+      updateCacheButton();
+    }
+
+    function updateCacheButton() {
+      const anyCached = MODELS.some((model) => cached[model.id]);
+      const known = cacheChecked;
+
+      dom.clearCache.disabled =
+        state.busy || (known && !anyCached);
+      dom.clearCache.textContent =
+        known && !anyCached ? "No cached models" : "Clear cached models";
+    }
+
+    function renderProgress(ref, progress, text) {
+      const percent = Math.min(100, Math.max(0, Math.round(progress * 100)));
+
+      ref.percent.textContent = `${percent}%`;
+      ref.fill.style.width = `${percent}%`;
+      ref.track.setAttribute("aria-valuenow", String(percent));
+      ref.status.textContent = text || "Preparing the model…";
+      ref.status.title = text || "";
+    }
+
+    function queueProgress(modelId, ref, report) {
+      pendingProgress = {
+        modelId,
+        ref,
+        progress: report.progress,
+        text: report.text,
+      };
+
+      if (progressFrame) {
+        return;
+      }
+
+      progressFrame = requestAnimationFrame(() => {
+        progressFrame = 0;
+        const next = pendingProgress;
+        pendingProgress = null;
+
+        if (!next || state.loadingModelId !== next.modelId) {
+          return;
+        }
+
+        renderProgress(next.ref, next.progress, next.text);
+      });
+    }
+
+    function showCardError(ref, info) {
+      const title = document.createElement("span");
+      title.className = "model-error-title";
+      title.textContent = info.title || "Model did not load";
+
+      const message = document.createElement("span");
+      message.textContent =
+        info.message || "Something interrupted the download. Try again.";
+
+      ref.error.replaceChildren(title, message);
+
+      if (info.detail) {
+        const detail = document.createElement("span");
+        detail.className = "model-error-detail";
+        detail.textContent = info.detail;
+        ref.error.appendChild(detail);
+      }
+
+      const retry = document.createElement("button");
+      retry.type = "button";
+      retry.className = "text-button model-retry";
+      retry.textContent = "Try again";
+      retry.addEventListener("click", () => {
+        void handleLoad(ref);
+      });
+      ref.error.appendChild(retry);
+
+      ref.error.hidden = false;
+    }
+
+    function hideCardError(ref) {
+      ref.error.hidden = true;
+      ref.error.replaceChildren();
+    }
+
+    /* ----------------------------------------------------------------------
+       Notices and chat
+       ---------------------------------------------------------------------- */
+
+    function showNotice(title, message) {
+      dom.noticeLabel.textContent = title;
+      dom.noticeText.textContent = message;
+      dom.notice.hidden = false;
+    }
+
+    function showChatPlaceholder() {
+      dom.chatContainer.hidden = true;
+      dom.chatPlaceholder.hidden = false;
+      dom.chatNote.textContent = "No model loaded";
+    }
+
+    async function openChat(engine, model) {
+      if (!chat) {
+        chat = createChat(dom.chatContainer, {
+          suggestions: SUGGESTIONS,
+          assistantName: model.name,
+        });
+      }
+
+      chat.setEngine(engine);
+      chat.setModelName(model.name);
+      await chat.reset();
+
+      dom.chatContainer.hidden = false;
+      dom.chatPlaceholder.hidden = true;
+      dom.chatNote.textContent = model.name;
+      chat.focus({ preventScroll: true });
+    }
+
+    async function teardownChat() {
+      if (chat) {
+        await chat.stop();
+        chat.setEngine(null);
+        await chat.reset();
+      }
+
+      await unloadModel();
+      showChatPlaceholder();
+    }
+
+    async function handleLoad(ref) {
+      if (state.busy || !state.supported) {
+        return;
+      }
+
+      hideCardError(ref);
+      state.busy = true;
+      state.loadingModelId = ref.model.id;
+      renderProgress(ref, 0, "Preparing the model…");
+      refreshCards();
+
+      try {
+        if (state.loadedModelId && state.loadedModelId !== ref.model.id) {
+          await teardownChat();
+          state.loadedModelId = null;
+        }
+
+        const engine = await loadModel(ref.model.id, (report) => {
+          queueProgress(ref.model.id, ref, report);
+        });
+
+        state.loadedModelId = ref.model.id;
+        cached[ref.model.id] = true;
+
+        await openChat(engine, ref.model);
+      } catch (error) {
+        state.loadedModelId = null;
+        const info = describeError(error, {
+          phase: "load",
+          model: ref.model,
+        });
+        showCardError(ref, info);
+        showChatPlaceholder();
+      } finally {
+        state.loadingModelId = null;
+        state.busy = false;
+        refreshCards();
+      }
+    }
+
+    async function handleUnload() {
+      if (state.busy || !state.loadedModelId) {
+        return;
+      }
+
+      state.busy = true;
+      refreshCards();
+
+      try {
+        await teardownChat();
+        state.loadedModelId = null;
+      } finally {
+        state.busy = false;
+        refreshCards();
+      }
+    }
+
+    /* ----------------------------------------------------------------------
+       Cache
+       ---------------------------------------------------------------------- */
+
+    function openCacheConfirm() {
+      focusBeforeConfirm = document.activeElement;
+      dom.cacheConfirm.hidden = false;
+      dom.clearCache.hidden = true;
+      dom.confirmClear.focus();
+    }
+
+    function closeCacheConfirm({ restoreFocus = true } = {}) {
+      dom.cacheConfirm.hidden = true;
+      dom.clearCache.hidden = false;
+
+      if (restoreFocus && focusBeforeConfirm instanceof HTMLElement) {
+        focusBeforeConfirm.focus();
+      }
+    }
+
+    async function handleClearCache() {
+      if (state.busy) {
+        return;
+      }
+
+      state.busy = true;
+      dom.confirmClear.disabled = true;
+      dom.cancelClear.disabled = true;
+      dom.cacheStatus.textContent = "Clearing cached models…";
+      refreshCards();
+
+      try {
+        await teardownChat();
+        state.loadedModelId = null;
+
+        const count = await clearModelCache();
+
+        MODELS.forEach((model) => {
+          cached[model.id] = false;
+        });
+        cacheChecked = true;
+
+        closeCacheConfirm({ restoreFocus: false });
+        dom.cacheStatus.textContent = count
+          ? `Cleared ${count} cached ${count === 1 ? "model" : "models"}.`
+          : "There were no cached models to clear.";
+        dom.clearCache.focus();
+      } catch (error) {
+        const info = describeError(error, { phase: "cache" });
+        dom.cacheStatus.textContent = info.message;
+        closeCacheConfirm({ restoreFocus: false });
+        dom.clearCache.focus();
+      } finally {
+        state.busy = false;
+        dom.confirmClear.disabled = false;
+        dom.cancelClear.disabled = false;
+        refreshCards();
+      }
+    }
+
+    /* ----------------------------------------------------------------------
+       Start-up
+       ---------------------------------------------------------------------- */
+
+    async function initGPU() {
+      const result = await detectWebGPU();
+      state.checked = true;
+      state.supported = result.supported;
+      refreshCards();
+
+      if (!result.supported) {
+        showNotice(
+          result.title || "WebGPU is not available",
+          result.message ||
+            "This browser cannot run models in the page. You can still read about them below.",
+        );
+        return;
+      }
+
+      try {
+        const map = await checkCachedModels();
+        Object.assign(cached, map);
+        cacheChecked = true;
+        refreshCards();
+      } catch (error) {
+        // Cache labels are a convenience; loading still reports real failures.
+      }
+    }
+
+    dom.clearCache.addEventListener("click", openCacheConfirm);
+    dom.confirmClear.addEventListener("click", () => {
+      void handleClearCache();
+    });
+    dom.cancelClear.addEventListener("click", () => closeCacheConfirm());
+
+    renderCards();
+    refreshCards();
+    void initGPU();
+  </script>
+</body>
+</html>

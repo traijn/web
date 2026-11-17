@@ -481,6 +481,571 @@ a:hover {
   }
 }
 
+/* Models playground (models.html) ----------------------------------------- */
+
+.models-notice {
+  max-width: 48rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--rule);
+  border-left: 2px solid var(--ink);
+  background: var(--wash);
+}
+
+.notice-label {
+  margin: 0 0 0.35rem;
+  color: var(--ink-muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.notice-text {
+  max-width: 60ch;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.chapter-body.models-body {
+  max-width: 64rem;
+}
+
+.models-body .chapter-lead {
+  max-width: 46ch;
+}
+
+.models-hint {
+  max-width: 52ch;
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.model-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  border: 1px solid var(--rule);
+  background: var(--rule);
+}
+
+.model-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  min-width: 0;
+  padding: clamp(1.1rem, 2.4vw, 1.6rem);
+  background: var(--paper);
+  transition: background var(--transition);
+}
+
+.model-card[data-loaded="true"] {
+  background: var(--paper-raised);
+}
+
+.model-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.model-kicker {
+  margin: 0;
+  color: var(--ink-muted);
+  font-family: var(--font-mincho);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.model-flags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.35rem;
+}
+
+.model-flag {
+  display: inline-block;
+  padding: 0.18rem 0.38rem;
+  border: 1px solid var(--rule-strong);
+  color: var(--ink-muted);
+  font-size: 0.56rem;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.model-name {
+  margin: 0;
+  font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+
+.model-note {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.model-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem 1rem;
+  margin: auto 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--rule);
+}
+
+.model-meta dt {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.model-meta dd {
+  margin: 0.15rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.model-meta a {
+  color: var(--ink);
+}
+
+.model-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.2rem;
+}
+
+.model-actions .button {
+  flex: 1 1 auto;
+  min-height: 2.5rem;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.68rem;
+}
+
+.model-unload {
+  font-size: 0.72rem;
+}
+
+.model-progress {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.15rem;
+}
+
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--ink-muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  line-height: 1.4;
+}
+
+.progress-percent {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.progress-status {
+  min-width: 0;
+  overflow: hidden;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.progress-track {
+  height: 3px;
+  border: 1px solid var(--rule);
+  background: var(--paper-deep);
+  overflow: hidden;
+}
+
+.progress-fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--ink);
+  transition: width 200ms ease;
+}
+
+.model-error {
+  margin: 0.25rem 0 0;
+  padding: 0.65rem 0.75rem;
+  border-left: 2px solid var(--ink);
+  background: var(--wash);
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.model-error-title {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--ink);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.model-error-detail {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--ink-muted);
+  font-size: 0.7rem;
+  overflow-wrap: anywhere;
+}
+
+.model-retry {
+  display: inline-block;
+  margin-top: 0.55rem;
+  font-size: 0.7rem;
+}
+
+.cache-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cache-status {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.cache-confirm {
+  margin-top: 1.25rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--rule-strong);
+  background: var(--paper-deep);
+}
+
+.cache-confirm p {
+  max-width: 52ch;
+  margin: 0 0 0.85rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.cache-confirm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.chat-placeholder {
+  max-width: 46ch;
+}
+
+.chat-placeholder .chapter-lead {
+  margin-bottom: 0.8rem;
+}
+
+/* Chat component (js/chat.js) --------------------------------------------- */
+
+.chat-host {
+  min-width: 0;
+}
+
+.chat {
+  margin-top: 0.5rem;
+  border: 1px solid var(--ink);
+  background: var(--paper-raised);
+}
+
+.chat-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.chat-title {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.chat-model {
+  margin: 0.15rem 0 0;
+  color: var(--ink);
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+}
+
+.chat-system {
+  border-bottom: 1px solid var(--rule);
+}
+
+.chat-system summary {
+  padding: 0.65rem 1.1rem;
+  color: var(--ink-muted);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.chat-system summary:hover {
+  color: var(--ink);
+}
+
+.chat-system-body {
+  padding: 0 1.1rem 1rem;
+}
+
+.chat-field-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--ink-muted);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.chat-system-input,
+.chat-input {
+  width: 100%;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  padding: 0.6rem 0.7rem;
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.chat-system-input {
+  min-height: 4.5rem;
+  resize: vertical;
+}
+
+.chat-field-hint {
+  margin: 0.4rem 0 0;
+  color: var(--ink-muted);
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+.chat-log {
+  min-height: 11rem;
+  max-height: min(30rem, 58vh);
+  padding: 0.4rem 1.1rem;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.chat-empty {
+  padding: 1.25rem 0 1rem;
+}
+
+.chat-empty p {
+  max-width: 44ch;
+  margin: 0 0 0.9rem;
+  color: var(--ink-muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.chat-suggestions {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+  list-style: none;
+}
+
+.chat-suggestions li {
+  border-bottom: 1px solid var(--rule);
+}
+
+.chat-suggestion {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.7rem 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--font-serif);
+  font-size: 0.86rem;
+  line-height: 1.5;
+  text-align: left;
+  cursor: pointer;
+  transition: color var(--transition), padding-left var(--transition);
+}
+
+.chat-suggestion::after {
+  content: "→" / "";
+  color: var(--ink-muted);
+}
+
+.chat-suggestion:hover {
+  padding-left: 0.35rem;
+  color: var(--ink);
+}
+
+.chat-message {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.chat-message:last-child {
+  border-bottom: 0;
+}
+
+.chat-message-label {
+  margin: 0 0 0.3rem;
+  color: var(--ink-muted);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.chat-message-body {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.chat-message-user .chat-message-body {
+  color: var(--ink);
+}
+
+.chat-message-note {
+  margin: 0.4rem 0 0;
+  color: var(--ink-muted);
+  font-size: 0.68rem;
+  font-style: italic;
+  letter-spacing: 0.03em;
+}
+
+.chat-error {
+  margin: 0 1.1rem 0.9rem;
+  padding: 0.75rem 0.85rem;
+  border-left: 2px solid var(--ink);
+  background: var(--wash);
+}
+
+.chat-error-label {
+  margin: 0 0 0.25rem;
+  color: var(--ink);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.chat-error-text {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.chat-error-detail {
+  margin: 0.4rem 0 0;
+  color: var(--ink-muted);
+  font-size: 0.7rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.chat-error-actions {
+  margin-top: 0.55rem;
+}
+
+.chat-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem 0.8rem;
+  border-top: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+.chat-input {
+  min-height: 2.9rem;
+  max-height: 10rem;
+  resize: none;
+  overflow-y: auto;
+}
+
+.chat-form-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chat-send,
+.chat-stop {
+  min-height: 2.9rem;
+  padding: 0.7rem 1rem;
+}
+
+.chat-note {
+  margin: 0;
+  padding: 0 1.1rem 1rem;
+  background: var(--paper);
+  color: var(--ink-muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
+
+@media (max-width: 700px) {
+  .model-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .chat-form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .chat-form-actions {
+    justify-content: flex-end;
+  }
+
+  .chat-log {
+    max-height: 55vh;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
